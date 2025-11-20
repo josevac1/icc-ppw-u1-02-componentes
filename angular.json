@@ -27,8 +27,8 @@
           },
           "configurations": {
             "production": {
-               "baseHref": "/02-ui-componentes/",
-               "deployUrl": "/02-ui-componentes/",
+               "baseHref": "/icc-ppw-u1-02-componentes/",
+               "deployUrl": "/icc-ppw-u1-02-componentes/",
               "budgets": [
                 {
                   "type": "initial",
