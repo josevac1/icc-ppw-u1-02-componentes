@@ -8,160 +8,188 @@
   >
   </header-heuristica>
 
-
-<div class="p-6 max-w-md mx-auto bg-white rounded shadow">
-  <h2 class="text-xl mb-4">Editor de Texto</h2>
-
-  <!-- Sin opciones de deshacer/rehacer -->
-  <textarea
-    [(ngModel)]="content"
-    class="w-full h-32 p-3 border rounded resize-none"
-    placeholder="Escribe aquí..."
-  >
-  </textarea>
-
-  <!-- Modal que no se puede cerrar fácilmente -->
-  @if (showModal()) {
-  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white p-6 rounded max-w-sm">
-      <h3 class="text-lg mb-4">Procesando...</h3>
-      <p class="mb-4">Por favor espera mientras guardamos tu texto.</p>
-      <!-- NO HAY BOTÓN DE CANCELAR -->
-      <div class="flex justify-center">
-        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-      </div>
-    </div>
-  </div>
-  }
-
-  <div class="mt-4">
-    <button (click)="saveText()" class="bg-blue-500 text-white px-4 py-2 rounded">
-      Guardar Texto
-    </button>
-  </div>
-</div>
-<br />
-<div class="p-6 max-w-2xl mx-auto bg-white rounded-xl shadow-lg border">
-  <div class="flex items-center justify-between mb-4">
-    <div class="flex items-center">
-      <span class="text-2xl mr-3">📝</span>
-      <h2 class="text-xl font-semibold">Editor de Texto</h2>
-    </div>
-
-    <!-- Controles de deshacer/rehacer -->
-    <div class="flex space-x-2">
-      <button
-        (click)="undo()"
-        [disabled]="!canUndo()"
-        class="px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 disabled:text-gray-400 rounded-lg border transition-colors"
-        title="Deshacer (Ctrl+Z)"
-      >
-        ↶ Deshacer
-      </button>
-
-      <button
-        (click)="redo()"
-        [disabled]="!canRedo()"
-        class="px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 disabled:text-gray-400 rounded-lg border transition-colors"
-        title="Rehacer (Ctrl+Y)"
-      >
-        ↷ Rehacer
-      </button>
-    </div>
-  </div>
-
-  <!-- Editor con historial -->
-  <textarea
-    [(ngModel)]="content"
-    (input)="onTextChange()"
-    class="w-full h-40 p-4 border-2 border-gray-200 rounded-lg resize-none focus:border-blue-500 focus:outline-none"
-    placeholder="Escribe aquí... Usa Ctrl+Z para deshacer y Ctrl+Y para rehacer"
-  >
-  </textarea>
-
-  <!-- Información del historial -->
-  <div class="mt-2 text-sm text-gray-600 flex justify-between">
-    <span>Cambios: {{ history().length }}</span>
-    <span>Posición: {{ currentIndex() + 1 }}</span>
-  </div>
-
-  <!-- Modal controlable por el usuario -->
-  @if (showModal()) {
-  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-xl max-w-md w-full mx-4 border">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-semibold">Guardando Texto</h3>
-        <!-- Botón X para cerrar -->
-        <button
-          (click)="closeModal()"
-          class="text-gray-400 hover:text-gray-600 text-xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"
-        >
-          ×
-        </button>
-      </div>
-
-      <div class="mb-4">
-        <p class="mb-2">Guardando tu documento...</p>
-        <!-- Barra de progreso -->
-        <div class="w-full bg-gray-200 rounded-full h-2">
-          <div
-            class="bg-blue-600 h-2 rounded-full transition-all duration-300"
-            [style.width.%]="saveProgress()"
-          ></div>
+  <div class="p-6 max-w-md mx-auto bg-white rounded shadow">
+      <h2 class="text-xl mb-4">Editor de Texto</h2>
+      
+      <!-- Sin opciones de deshacer/rehacer -->
+      <textarea 
+        [(ngModel)]="content" 
+        class="w-full h-32 p-3 border rounded resize-none"
+        placeholder="Escribe aquí...">
+      </textarea>
+      
+      <!-- Modal que no se puede cerrar fácilmente -->
+      @if (showModal()) {
+        <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div class="bg-white p-6 rounded max-w-sm">
+            <h3 class="text-lg mb-4">Procesando...</h3>
+            <p class="mb-4">Por favor espera mientras guardamos tu texto.</p>
+            <!-- NO HAY BOTÓN DE CANCELAR -->
+            <div class="flex justify-center">
+              <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            </div>
+          </div>
         </div>
-        <p class="text-sm text-gray-600 mt-1">{{ saveProgress() }}% completado</p>
-      </div>
-
-      <!-- Múltiples opciones de control -->
-      <div class="flex space-x-3">
-        <button
-          (click)="cancelSave()"
-          class="flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors"
-        >
-          ❌ Cancelar
-        </button>
-
-        <button
-          (click)="saveInBackground()"
-          class="flex-1 px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-lg transition-colors"
-        >
-          🔄 Continuar en segundo plano
+      }
+      
+      <div class="mt-4">
+        <button 
+          (click)="saveText()"
+          class="bg-blue-500 text-white px-4 py-2 rounded">
+          Guardar Texto
         </button>
       </div>
     </div>
-  </div>
-  }
-
-  <!-- Controles principales -->
-  <div class="mt-6 flex space-x-3">
-    <button
-      (click)="saveText()"
-      [disabled]="content.length === 0"
-      class="px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white rounded-lg font-medium transition-colors"
-    >
-      💾 Guardar Texto
-    </button>
-
-    <button
-      (click)="clearText()"
-      [disabled]="content.length === 0"
-      class="px-6 py-3 bg-red-100 hover:bg-red-200 text-red-700 disabled:bg-gray-100 disabled:text-gray-400 rounded-lg font-medium transition-colors"
-    >
-      🗑️ Limpiar Todo
-    </button>
-
-    <button
-      (click)="loadTemplate()"
-      class="px-6 py-3 bg-green-100 hover:bg-green-200 text-green-700 rounded-lg font-medium transition-colors"
-    >
-      📄 Cargar Plantilla
-    </button>
-  </div>
-</div>
-<br>
+  
 
 
-<br>
+    <div class="p-6 max-w-2xl mx-auto bg-white rounded-xl shadow-lg border">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center">
+          <span class="text-2xl mr-3">📝</span>
+          <h2 class="text-xl font-semibold">Editor de Texto</h2>
+        </div>
+        
+        <!-- Controles de deshacer/rehacer -->
+        <div class="flex space-x-2">
+          <button 
+            (click)="undo()"
+            [disabled]="!canUndo()"
+            class="px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 disabled:text-gray-400 rounded-lg border transition-colors"
+            title="Deshacer (Ctrl+Z)">
+            ↶ Deshacer
+          </button>
+          
+          <button 
+            (click)="redo()"
+            [disabled]="!canRedo()"
+            class="px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 disabled:text-gray-400 rounded-lg border transition-colors"
+            title="Rehacer (Ctrl+Y)">
+            ↷ Rehacer
+          </button>
+        </div>
+      </div>
+      
+      <!-- Editor con historial -->
+      <textarea 
+        [(ngModel)]="content" 
+        (input)="onTextChange()"
+        class="w-full h-40 p-4 border-2 border-gray-200 rounded-lg resize-none focus:border-blue-500 focus:outline-none"
+        placeholder="Escribe aquí... Usa Ctrl+Z para deshacer y Ctrl+Y para rehacer">
+      </textarea>
+      
+      <!-- Información del historial -->
+      <div class="mt-2 text-sm text-gray-600 flex justify-between">
+        <span>Cambios: {{ history().length }}</span>
+        <span>Posición: {{ currentIndex() + 1 }}</span>
+      </div>
+      
+      <!-- Modal controlable por el usuario -->
+      @if (showModal()) {
+        <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div class="bg-white p-6 rounded-xl max-w-md w-full mx-4 border">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-semibold">Guardando Texto</h3>
+              <!-- Botón X para cerrar -->
+              <button 
+                (click)="closeModal()"
+                class="text-gray-400 hover:text-gray-600 text-xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
+                ×
+              </button>
+            </div>
+            
+            <div class="mb-4">
+              <p class="mb-2">Guardando tu documento...</p>
+              <!-- Barra de progreso -->
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div 
+                  class="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                  [style.width.%]="saveProgress()">
+                </div>
+              </div>
+              <p class="text-sm text-gray-600 mt-1">{{ saveProgress() }}% completado</p>
+            </div>
+            
+            <!-- Múltiples opciones de control -->
+            <div class="flex space-x-3">
+              <button 
+                (click)="cancelSave()"
+                class="flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors">
+                ❌ Cancelar
+              </button>
+              
+              <button 
+                (click)="saveInBackground()"
+                class="flex-1 px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-lg transition-colors">
+                🔄 Continuar en segundo plano
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+      
+      <!-- Controles principales -->
+      <div class="mt-6 flex space-x-3">
+        <button 
+          (click)="saveText()"
+          [disabled]="content.length === 0"
+          class="px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white rounded-lg font-medium transition-colors">
+          💾 Guardar Texto
+        </button>
+        
+        <button 
+          (click)="clearText()"
+          [disabled]="content.length === 0"
+          class="px-6 py-3 bg-red-100 hover:bg-red-200 text-red-700 disabled:bg-gray-100 disabled:text-gray-400 rounded-lg font-medium transition-colors">
+          🗑️ Limpiar Todo
+        </button>
+        
+        <button 
+          (click)="loadTemplate()"
+          class="px-6 py-3 bg-green-100 hover:bg-green-200 text-green-700 rounded-lg font-medium transition-colors">
+          📄 Cargar Plantilla
+        </button>
+      </div>
+    </div>
+
+
+
+
+    <div class="max-w-md mx-auto mt-8 p-6 bg-white rounded shadow">
+      <h2 class="text-2xl mb-4">Registro de Usuario</h2>
+      
+      <!-- SIN INDICADORES DE ESTADO -->
+      <form (ngSubmit)="onSubmit()">
+        <input 
+          type="text" 
+          [(ngModel)]="nombre" 
+          name="nombre"
+          placeholder="Nombre completo"
+          class="w-full p-2 border mb-4">
+          
+        <input 
+          type="email" 
+          [(ngModel)]="email" 
+          name="email"
+          placeholder="Email"
+          class="w-full p-2 border mb-4">
+          
+        <input 
+          type="password" 
+          [(ngModel)]="password" 
+          name="password"
+          placeholder="Contraseña"
+          class="w-full p-2 border mb-4">
+          
+        <!-- Botón sin cambios visuales -->
+        <button 
+          type="submit"
+          class="w-full bg-blue-500 text-white p-2 rounded">
+          Registrar
+        </button>
+      </form>
+    </div>
+
     <div class="max-w-md mx-auto mt-8 p-6 bg-white rounded-xl shadow-2xl border border-gray-200">
       <div class="flex items-center mb-6">
         <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-3">
@@ -317,5 +345,4 @@
         </div>
       }
     </div>
-
 </header>
