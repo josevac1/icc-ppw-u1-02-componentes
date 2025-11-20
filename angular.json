@@ -27,6 +27,8 @@
           },
           "configurations": {
             "production": {
+               "baseHref": "/02-ui-componentes/",
+               "deployUrl": "/02-ui-componentes/",
               "budgets": [
                 {
                   "type": "initial",
@@ -53,6 +55,7 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
+              
               "buildTarget": "02-ui-componentes:build:production"
             },
             "development": {
