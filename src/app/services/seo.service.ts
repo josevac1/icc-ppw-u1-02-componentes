@@ -16,7 +16,7 @@ export interface SeoMetadata {
 })
 export class SeoService {
   private baseUrl = 'https://josevac1.github.io/icc-ppw-u1-02-componentes';
-  private defaultImage = `${this.baseUrl}/assets/image.png`;
+  private defaultImage = `${this.baseUrl}/assets/imagen.png`;
 
   constructor(
     private titleService: Title,
