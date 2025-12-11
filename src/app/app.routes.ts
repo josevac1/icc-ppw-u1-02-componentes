@@ -5,11 +5,19 @@ export const routes: Routes = [
 
     {
         path:'',
-        component: InterfazPage
+        component: InterfazPage,
+        data: {
+            title: 'MV Creative Developer | Componentes UI Angular',
+            description: 'Explora componentes UI modernos creados en Angular con Tailwind CSS y DaisyUI.'
+        }
     },
     {
         path: 'heuristica',
-        loadChildren: () => import('./h1-page/h1.routes').then(m => m.heuristicaRoutes)
+        loadChildren: () => import('./h1-page/h1.routes').then(m => m.heuristicaRoutes),
+        data: {
+            title: 'Heurísticas de Usabilidad | MV Developer',
+            description: 'Las 10 Heurísticas de Usabilidad de Nielsen explicadas con ejemplos prácticos.'
+        }
     }
     
 ];
